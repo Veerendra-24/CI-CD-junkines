@@ -7,3 +7,20 @@ git commit -m "Initial commit"
 git branch -M main
 git remote add origin https://github.com/Veerendra-24/CI-CD-junkines.git
 git push -u origin main
+# Create project folder locally
+mkdir CI-CD-junkines
+cd CI-CD-junkines
+
+# Add a sample Java Maven project
+mvn archetype:generate -DgroupId=com.example -DartifactId=myapp -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+# Move into project
+cd myapp
+
+# Commit and push
+git init
+git branch -M main
+git remote add origin https://github.com/Veerendra-24/CI-CD-junkines.git
+git add .
+git commit -m "Add sample Java Maven project"
+git push -u origin main
