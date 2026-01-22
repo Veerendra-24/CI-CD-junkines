@@ -24,3 +24,6 @@ git remote add origin https://github.com/Veerendra-24/CI-CD-junkines.git
 git add .
 git commit -m "Add sample Java Maven project"
 git push -u origin main
+git add Jenkinsfile
+git commit -m "Add Jenkinsfile for CI/CD"
+git push origin main
