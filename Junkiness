@@ -1,0 +1,9 @@
+mkdir CI-CD-junkines
+cd CI-CD-junkines
+echo "# CI‑CD junkines" > README.md
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/Veerendra-24/CI-CD-junkines.git
+git push -u origin main
