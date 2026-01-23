@@ -42,10 +42,15 @@ pipeline {
 }
 CI-CD-junkines/
 ├── Jenkinsfile
-├── myapp/
+├── myapp/           ← must be a folder
+│   ├── pom.xml
 │   └── src/...
 └── README.md
+
 cd path/to/CI-CD-junkines
 git add Jenkinsfile
 git commit -m "Add Jenkins pipeline"
+git push origin main
+git add myapp
+git commit -m "Add myapp folder with Maven project"
 git push origin main
