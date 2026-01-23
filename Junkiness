@@ -11,28 +11,31 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Build the project and skip tests for faster build
-                sh 'mvn clean package -DskipTests'
+                // Run Maven inside the 'myapp' folder
+                dir('myapp') {
+                    sh 'mvn clean package -DskipTests'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                // Run unit tests
-                sh 'mvn test'
+                dir('myapp') {
+                    sh 'mvn test'
+                }
             }
             post {
                 always {
-                    // Collect test results for Jenkins
-                    junit '**/target/surefire-reports/*.xml'
+                    // Collect test results
+                    junit 'myapp/target/surefire-reports/*.xml'
                 }
             }
         }
 
         stage('Archive Artifacts') {
             steps {
-                // Save the JAR file built by Maven
-                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                // Archive the JAR built by Maven
+                archiveArtifacts artifacts: 'myapp/target/*.jar', fingerprint: true
             }
         }
     }
