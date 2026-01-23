@@ -40,3 +40,12 @@ pipeline {
         }
     }
 }
+CI-CD-junkines/
+├── Jenkinsfile
+├── myapp/
+│   └── src/...
+└── README.md
+cd path/to/CI-CD-junkines
+git add Jenkinsfile
+git commit -m "Add Jenkins pipeline"
+git push origin main
