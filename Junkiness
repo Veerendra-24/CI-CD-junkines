@@ -1,29 +1,39 @@
-mkdir CI-CD-junkines
-cd CI-CD-junkines
-echo "# CI‑CD junkines" > README.md
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/Veerendra-24/CI-CD-junkines.git
-git push -u origin main
-# Create project folder locally
-mkdir CI-CD-junkines
-cd CI-CD-junkines
+pipeline {
+    agent any
 
-# Add a sample Java Maven project
-mvn archetype:generate -DgroupId=com.example -DartifactId=myapp -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/Veerendra-24/CI-CD-junkines.git'
+            }
+        }
 
-# Move into project
-cd myapp
+        stage('Build') {
+            steps {
+                // Build the project and skip tests for faster build
+                sh 'mvn clean package -DskipTests'
+            }
+        }
 
-# Commit and push
-git init
-git branch -M main
-git remote add origin https://github.com/Veerendra-24/CI-CD-junkines.git
-git add .
-git commit -m "Add sample Java Maven project"
-git push -u origin main
-git add Jenkinsfile
-git commit -m "Add Jenkinsfile for CI/CD"
-git push origin main
+        stage('Test') {
+            steps {
+                // Run unit tests
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    // Collect test results for Jenkins
+                    junit '**/target/surefire-reports/*.xml'
+                }
+            }
+        }
+
+        stage('Archive Artifacts') {
+            steps {
+                // Save the JAR file built by Maven
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            }
+        }
+    }
+}
